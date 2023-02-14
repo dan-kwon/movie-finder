@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "movie-madlibs"
+version = "0.1.0"
+description = "Find a suggested movie through madlibs-esque prompts"
+authors = ["dan-kwon <danielkwon02@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "movie_madlibs"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sentence-transformers = "^2.2.2"
+pandas = "^1.5.3"
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.21.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
