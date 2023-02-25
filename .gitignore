@@ -130,3 +130,4 @@ dmypy.json
 
 # config files
 src/movienight/datasets/_config.py
+src/movienight/datasets/_config.py
