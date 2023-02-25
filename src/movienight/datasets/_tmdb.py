@@ -38,6 +38,6 @@ def _get_tmdb(
     return movie_data
 
 if __name__ == "__main__":
-    filepath_ = Path("src/movie_finder/datasets/data/tmdb.csv")
+    filepath_ = Path("src/movienight/datasets/data/tmdb.csv")
     data_ = _get_tmdb()
     data_.to_csv(filepath_, index=False)

@@ -4,7 +4,7 @@ from pathlib import Path
 def load_tmdb():
     """
     """
-    filepath_ = Path("src/movie_finder/datasets/data/tmdb.csv")
+    filepath_ = Path("src/movienight/datasets/data/tmdb.csv")
     data_ = pd.read_csv(
         filepath_, 
         dtype={
