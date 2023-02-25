@@ -1,0 +1,1 @@
+tmdb_api_key = "{INSERT TMDB API KEY HERE}"

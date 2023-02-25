@@ -2,10 +2,11 @@ import json
 import requests
 import pandas as pd
 from pathlib import Path
+from src.movienight.datasets._config import tmdb_api_key
 
 def _get_tmdb(
     url=["https://api.themoviedb.org/3/movie/popular","https://api.themoviedb.org/3/movie/top_rated"],
-    api_key = '87a6e64caf61f2a624fdf65c58337921',
+    api_key = tmdb_api_key,
     n_pages = 100,
     col_names = [
         "id",

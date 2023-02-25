@@ -1,21 +1,18 @@
-Stats 418 Final Project
+Movie Night
 ============
 
-This repository holds all code relevant to the final project for Stats 418.
+**movienight** is a python package that uses NLP to return a list of recommended movies based on free form text input. **movienight** is not intended to be that useful and is more of a personal project.
 
-
-    ├── src
-    │   ├── movie_finder/
-    │   │   ├── _MovieFinder.py       <- Holds all classes and functions relevant to MovieFinder
-    │   │   └── datasets/        
-    │   │       ├── _base.py          <- Utility function to load tmdb dataset
-    │   │       ├── _tmdb.py          <- Script used to query TMDB api
-    │   │       └── data              <- Holds datasets used by MovieFinder
-    │   └── Nrl/
-    │       └── _Nrl.py               <- Holds all classes and functions relevant to neural network model
-    │
-    ├── STAT 418 Dashboard v3.ipynb   <- Dashboard that contains all outputs for the project
-    ├── Movie_Finder_demo.ipynb       <- Notebook used to test MovieFinder functionality
+    ├──src/movienight/
+    │   └── _MovieNight.py           <- Holds all classes and functions relevant to MovieNigh
+    │       └── datasets/        
+    │           ├── _base.py         <- Utility function to load tmdb dataset
+    │           ├── _tmdb.py         <- Script used to query TMDB api
+    │           ├── _config.py       <- Config file that holds TMDB api key. Fill in with your own api key.
+    │           └── data             <- Holds datasets used by MovieNight
+    ├──MovieFinderApp/
+    │   └── movie
+    ├── demo.ipynb                   <- Notebook used to test MovieNight functionality
     └── README.md
 
 Quick Start
@@ -25,5 +22,3 @@ This project uses ```poetry``` to manage dependencies. Download ```poetry``` fol
 ```
 poetry install
 ```
-
-Once all dependencies are installed, run the entirety of ```STAT 418 Dashboard v3.ipynb``` to create a dashboard that runs locally.
