@@ -1,50 +1,65 @@
-from dash import Dash, dcc, html, Input, Output
-import numpy as np
+import dash
+from dash import Dash, html, dcc, dash_table, Input, Output, State, MATCH
+import plotly.express as px
 import pandas as pd
+import numpy as np
 from movienight import MovieFinder
 from movienight.datasets import load_tmdb
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+# Use pre-loaded dataset from TMDB
+movie_data = load_tmdb()
 
-app = Dash(__name__, external_stylesheets=external_stylesheets)
+# dash app
+app = Dash(__name__)
 
-app.layout = html.Div([
+app.layout = html.Div(children=[
+    html.H1(children='Find movie recommendations using NLP'),
+
+    html.Div(children='''
+        Enter a query to search for movie recommendations. The more specific the query, the better the recommendations will be.
+    '''),
+
+    html.Br(),
+
     dcc.Input(
-        id="search-query",
-        type="text",
-        value="Describe the movie you want to watch here. The more descriptive the better!"
+        id='input-query',
+        placeholder='Search for a movie',
+        type='text',
+        value='',
+        style={'width': '70%'}
     ),
-    html.Table([
-        html.Tr([html.Td("Movie 1"), html.Td(id='m1')]),
-        html.Tr([html.Td("Movie 2"), html.Td(id='m2')]),
-        html.Tr([html.Td("Movie 3"), html.Td(id='m3')]),
-        html.Tr([html.Td("Movie 4"), html.Td(id='m4')]),
-        html.Tr([html.Td("Movie 5"), html.Td(id='m5')]),
-    ]),
+
+    html.Br(),
+    html.Br(),
+
+    html.Button('Submit', id='submit-button'),
+    
+    html.Br(),
+    html.Br(),
+    
+    dash_table.DataTable(
+        data=movie_data.head(10).to_dict('records'),
+        columns=[{"name": i, "id": i} for i in ["Title","Synopsis"]], id='table')
 ])
 
-
 @app.callback(
-    Output('m1', 'children'),
-    Output('m2', 'children'),
-    Output('m3', 'children'),
-    Output('m4', 'children'),
-    Output('m5', 'children'),
-    Input('search-query', 'value'))
-
-def callback_a(query):
-    # Use pre-loaded dataset from TMDB
-    movie_data = load_tmdb()
-    # load MovieFinder
+    [Output("table", "data"), Output('table', 'columns')],
+    [Input('submit-button', 'n_clicks')]
+)
+def update_top10_data(n_clicks):
+    # Load MovieFinder instance
     m = MovieFinder()
-    moviefinder_parameters = {
-        "data" : movie_data,
-        "n" : 10
-    }
-    m.get_n_matches(query=query, **moviefinder_parameters)
-    results = movie_data.iloc[m.top_n_index,:][["title"]]
-    return results[0],results[1],results[2],results[3],results[4]
+    query = f"{n_clicks}"
+    m.get_n_matches(
+        query=query, 
+        data=movie_data,
+        n=10
+    )
 
+    if n_clicks is None:
+        return movie_data.head(10).to_dict('records'), [{"name": i, "id": i} for i in ["Title","Synopsis"]]
+
+    return movie_data.iloc[m.top_n_index,:][["title","overview"]].to_dict('records'), [{"name": i, "id": i} for i in ["Title","Synopsis"]]
 
 if __name__ == '__main__':
     app.run_server(debug=True)
